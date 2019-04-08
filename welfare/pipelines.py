@@ -4,17 +4,15 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-from __future__ import unicode_literals
-from scrapy.exporters import JsonItemExporter, CsvItemExporter
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
+from scrapy.exporters import CsvItemExporter
+
 
 # from scrapy.exceptions import DropItem
 
 class WelfarePipeline(object):
     def __init__(self):
-        self.file = open("result.csv", 'wb')
+        self.file = open("bokjiro.csv", 'wb')
         self.exporter = CsvItemExporter(self.file, encoding='euc-kr')
         self.exporter.start_exporting()
 

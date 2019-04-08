@@ -9,10 +9,7 @@ import scrapy
 
 
 class WelfareItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-
-    servicename = scrapy.Field() #혜택명
-    link = scrapy.Field()
-    institution = scrapy.Field() #기관명
-    pass
+    
+    service = scrapy.Field() 
+    name = scrapy.Field()
+    serviceCont = scrapy.Field()
