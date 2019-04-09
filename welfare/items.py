@@ -9,7 +9,11 @@ import scrapy
 
 
 class WelfareItem(scrapy.Item):
-    
     service = scrapy.Field() 
     name = scrapy.Field()
-    serviceCont = scrapy.Field()
+    purpose = scrapy.Field()
+    target = scrapy.Field()
+    content = scrapy.Field()
+    howto = scrapy.Field()
+    docs = scrapy.Field()
+    etc = scrapy.Field()
