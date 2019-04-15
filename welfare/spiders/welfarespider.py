@@ -11,7 +11,7 @@ class welfarespider(scrapy.Spider):
     start_urls = ["http://bokjiro.go.kr/nwel/helpus/welsha/selectWelShaInfoBbrdMngList.do"]
 
     def start_requests(self):
-        for i in range(1, 4, 1):
+        for i in range(1, 43, 1):
             yield scrapy.Request(
                 "http://bokjiro.go.kr/nwel/helpus/welsha/selectWelShaInfoBbrdMngList.do?searchCondition=&searchKeyword=&srchDuration=&stDate=&endDate=&pageUnit=10&endSvrEsc=0&intClIdStr=&orderCol=MODDATE&orderBy=DESC&recordCountPerPage=10&viewEndService=&pageIndex=%d" %i, 
                 self.parse)
@@ -36,56 +36,100 @@ class welfarespider(scrapy.Spider):
         else:
             item['name'] = response.xpath('//*[@id="contents"]/div[2]/table/tbody/tr[2]/td/text()').extract()
      
-        val1 = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[1]/strong/text()')
-        val2 = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[1]/div/text()')
-        if val1 == '사업목적':
-            purpose = val2
-            item['purpose'] = purpose.extract()
-        elif val1 == '지원대상':
-            target = val2
-            item['target'] = target.extract()
-        elif val1 == '지원내용':
-            content = val2
-            item['content'] = content.extract()
-        elif val1 == '신청방법':
-            howto = val2
-            item['howto'] = howto.extract()
-        elif val1 == '제출서류':
-            docs = val2
-            item['docs'] = docs.extract()
-        elif val1 == '기타':
-            etc = val2
-            item['etc'] = etc.extract()
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[1]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[1]/div)')
 
-        # if purpose:
-        #     item['purpose'] = purpose.extract()
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
 
-        # if target:
-        #     item['target'] = target.extract()
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[2]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[2]/div)')
 
-        # if content:
-        #     item['content'] = content.extract()
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
 
-        # if howto:
-        #     item['howto'] = howto.extract()
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[3]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[3]/div)')
 
-        # if docs:
-        #     item['docs'] = docs.extract()
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
 
-        # if etc:
-        #     item['etc'] = etc.extract()
-        # if response.xpath('//section[@id="contents"]/div[2]/table/tbody/tr[1]/td/strong/text()').extract()[0] is not None:
-        #     item['service'] = response.xpath('//section[@id="contents"]/div[2]/table/tbody/tr[1]/td/strong/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[1]/div/text()').extract()[0] is not None:
-        #     item['purpose'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[1]/div/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[2]/div/text()').extract()[0] is not None:
-        #     item['target'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[2]/div/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[3]/div/text()').extract()[0] is not None:
-        #     item['content'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[3]/div/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[4]/div/text()').extract()[0] is not None:
-        #     item['howto'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[4]/div/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[5]/div/text()').extract()[0] is not None:
-        #     item['docs'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[5]/div/text()').extract()[0]
-        # if response.xpath('//section[@id="contents"]/div[2]/div/ul/li[6]/div/text()').extract()[0] is not None:
-        #     item['etc'] = response.xpath('//section[@id="contents"]/div[2]/div/ul/li[6]/div/text()').extract()[0]
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[4]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[4]/div)')
+
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
+
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[5]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[5]/div)')
+
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
+
+        val1 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[6]/strong)')
+        val2 = response.xpath('string(//section[@id="contents"]/div[2]/div/ul/li[6]/div)')
+
+        if val1.get('data') == '사업목적':
+            item['purpose'] = val2.get('data')
+        elif val1.get('data') == '지원대상':
+            item['target'] = val2.get('data')
+        elif val1.get('data') == '지원내용':
+            item['content'] = val2.get('data')
+        elif val1.get('data') == '신청방법':
+            item['howto'] = val2.get('data')
+        elif val1.get('data') == '제출서류':
+            item['docs'] = val2.get('data')
+        elif val1.get('data') == '기타':
+            item['etc'] = val2.get('data')
+
         yield item
